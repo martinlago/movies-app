@@ -13,4 +13,5 @@ struct ApiConstants {
     
     /// URLs
     static let baseURL = "https://api.themoviedb.org/3/"
+    static let baseImagesURL = "https://image.tmdb.org/t/p/w500"
 }

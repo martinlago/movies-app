@@ -10,21 +10,26 @@ import Foundation
 // MARK: - Api Endpoints
 
 enum ApiEndpoint {
+    case genres
     case popular
     case nowPlaying
     case upcoming
     case topRated
     case search
+    case movieDetail(id: Int)
+    case movieVideos(id: Int)
     
     var method: String {
         switch self {
-        case .popular, .nowPlaying, .upcoming, .topRated, .search:
+        case .genres, .popular, .nowPlaying, .upcoming, .topRated, .search, .movieDetail, .movieVideos:
             return "GET"
         }
     }
     
     var path: String {
         switch self {
+        case .genres:
+            "genre/movie/list"
         case .popular:
             "movie/popular"
         case .nowPlaying:
@@ -35,6 +40,10 @@ enum ApiEndpoint {
             "movie/top_rated"
         case .search:
             "search/movie"
+        case .movieDetail(let id):
+            "movie/\(id)"
+        case .movieVideos(let id):
+            "movie/\(id)/videos"
         }
     }
 }
