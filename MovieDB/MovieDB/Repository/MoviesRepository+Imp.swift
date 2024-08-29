@@ -15,27 +15,27 @@ class MoviesRepositoryImp: MoviesRepository {
         return try await ApiManager.shared.performRequest(for: .genres)
     }
     
-    func getPopularMovies() async throws -> [Movie] {
+    func getPopularMovies() async throws -> Movies {
         let response: CommonResponse<Movie> = try await ApiManager.shared.performRequest(for: .popular)
         return response.results
     }
     
-    func getNowPlayingMovies(quantity: Int) async throws -> [Movie] {
+    func getNowPlayingMovies(quantity: Int) async throws -> Movies {
         let response: CommonResponse<Movie> = try await ApiManager.shared.performRequest(for: .nowPlaying)
         return Array(response.results.prefix(upTo: quantity))
     }
     
-    func getUpcomingMovies(quantity: Int) async throws -> [Movie] {
+    func getUpcomingMovies(quantity: Int) async throws -> Movies {
         let response: CommonResponse<Movie> = try await ApiManager.shared.performRequest(for: .upcoming)
         return Array(response.results.prefix(upTo: quantity))
     }
     
-    func getTopRatedMovies(quantity: Int) async throws -> [Movie] {
+    func getTopRatedMovies(quantity: Int) async throws -> Movies {
         let response: CommonResponse<Movie> = try await ApiManager.shared.performRequest(for: .topRated)
         return Array(response.results.prefix(upTo: quantity))
     }
     
-    func searchMovies(by query: String) async throws -> [Movie] {
+    func searchMovies(by query: String) async throws -> Movies {
         let queryItems = [
             URLQueryItem(name: "query", value: query)
         ]
@@ -49,7 +49,8 @@ class MoviesRepositoryImp: MoviesRepository {
     }
     
     func getMovieVideos(for id: Int) async throws -> [MovieVideo] {
-        return try await ApiManager.shared.performRequest(for: .movieVideos(id: id))
+        let response: MovieVideoResponse = try await ApiManager.shared.performRequest(for: .movieVideos(id: id))
+        return response.results
     }
     
 }

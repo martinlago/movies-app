@@ -41,16 +41,13 @@ class ApiManager {
 
 private extension ApiManager {
     
-    func createRequest(to url: String, for endpoint: ApiEndpoint, with queryItems: [URLQueryItem] = []) throws -> URLRequest {
-        guard var url = URL(string: url),
+    func createRequest(to urlString: String, for endpoint: ApiEndpoint, with queryItems: [URLQueryItem] = []) throws -> URLRequest {
+        guard let url = URL(string: urlString),
               var components = URLComponents(url: url.appendingPathComponent(endpoint.path), resolvingAgainstBaseURL: true)
         else {
             throw ApiError.invalidUrl
         }
         
-        let queryItems: [URLQueryItem] = [
-          URLQueryItem(name: "query", value: "fast")
-        ]
         components.queryItems = components.queryItems.map { $0 + queryItems } ?? queryItems
         // TODO: Remove this forced unwrap
         var request = URLRequest(url: components.url!)
@@ -60,7 +57,7 @@ private extension ApiManager {
         
         /// Headers
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.setValue("Bearer", forHTTPHeaderField: "Authorization")
+        request.setValue("Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJhZDk1MTY5ZGM0NzViMjM1NjExYzEzMWEzN2RjOTUyOSIsIm5iZiI6MTcyNDg1Mzg5Ny4zMzEzMDksInN1YiI6IjY2Y2U3MjhkNDkzNzNhMjZjNmQzZDYxOCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.uydC23wqL38pwgNKnBDMlej3KtZ8zIpGVHGNi0ecLAw", forHTTPHeaderField: "Authorization")
         
         return request
     }

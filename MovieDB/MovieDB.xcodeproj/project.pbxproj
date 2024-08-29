@@ -39,6 +39,13 @@
 		3C1AF23A2C80AE2F001D6E65 /* Text+Styles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C1AF2392C80AE2F001D6E65 /* Text+Styles.swift */; };
 		3C1AF23C2C80B43D001D6E65 /* TextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C1AF23B2C80B43D001D6E65 /* TextField.swift */; };
 		3C1AF23E2C80B93C001D6E65 /* PlaceholderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C1AF23D2C80B93C001D6E65 /* PlaceholderView.swift */; };
+		3C1AF2402C80BEFA001D6E65 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C1AF23F2C80BEFA001D6E65 /* HomeViewModel.swift */; };
+		3C1AF2422C80CA49001D6E65 /* RemoteImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C1AF2412C80CA49001D6E65 /* RemoteImage.swift */; };
+		3C1AF2442C80CF1F001D6E65 /* BorderedNumber.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C1AF2432C80CF1F001D6E65 /* BorderedNumber.swift */; };
+		3C1AF2472C80E023001D6E65 /* DetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C1AF2462C80E023001D6E65 /* DetailView.swift */; };
+		3C1AF2492C80E834001D6E65 /* GenericHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C1AF2482C80E834001D6E65 /* GenericHeader.swift */; };
+		3C1AF24B2C80F024001D6E65 /* DetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C1AF24A2C80F024001D6E65 /* DetailViewModel.swift */; };
+		3C1AF24D2C810A2C001D6E65 /* FloatUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C1AF24C2C810A2C001D6E65 /* FloatUtils.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -76,6 +83,13 @@
 		3C1AF2392C80AE2F001D6E65 /* Text+Styles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Text+Styles.swift"; sourceTree = "<group>"; };
 		3C1AF23B2C80B43D001D6E65 /* TextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextField.swift; sourceTree = "<group>"; };
 		3C1AF23D2C80B93C001D6E65 /* PlaceholderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceholderView.swift; sourceTree = "<group>"; };
+		3C1AF23F2C80BEFA001D6E65 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
+		3C1AF2412C80CA49001D6E65 /* RemoteImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteImage.swift; sourceTree = "<group>"; };
+		3C1AF2432C80CF1F001D6E65 /* BorderedNumber.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BorderedNumber.swift; sourceTree = "<group>"; };
+		3C1AF2462C80E023001D6E65 /* DetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailView.swift; sourceTree = "<group>"; };
+		3C1AF2482C80E834001D6E65 /* GenericHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericHeader.swift; sourceTree = "<group>"; };
+		3C1AF24A2C80F024001D6E65 /* DetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewModel.swift; sourceTree = "<group>"; };
+		3C1AF24C2C810A2C001D6E65 /* FloatUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatUtils.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -108,6 +122,7 @@
 		3C1AF1EC2C7F5375001D6E65 /* MovieDB */ = {
 			isa = PBXGroup;
 			children = (
+				3C1AF2452C80E011001D6E65 /* MovieDetail */,
 				3C1AF2272C7FD270001D6E65 /* Routing */,
 				3C1AF2262C7FCFDE001D6E65 /* Watchlist */,
 				3C1AF2252C7FCFD6001D6E65 /* Search */,
@@ -142,6 +157,7 @@
 				3C1AF2362C80ADD2001D6E65 /* Texts */,
 				3C1AF1FD2C7F5A06001D6E65 /* Colors.swift */,
 				3C1AF2162C7F9DCE001D6E65 /* DateParser.swift */,
+				3C1AF24C2C810A2C001D6E65 /* FloatUtils.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -193,6 +209,9 @@
 				3C1AF21E2C7FAF6C001D6E65 /* CustomImage.swift */,
 				3C1AF23B2C80B43D001D6E65 /* TextField.swift */,
 				3C1AF23D2C80B93C001D6E65 /* PlaceholderView.swift */,
+				3C1AF2412C80CA49001D6E65 /* RemoteImage.swift */,
+				3C1AF2432C80CF1F001D6E65 /* BorderedNumber.swift */,
+				3C1AF2482C80E834001D6E65 /* GenericHeader.swift */,
 			);
 			path = UIComponents;
 			sourceTree = "<group>";
@@ -202,6 +221,7 @@
 			children = (
 				3C1AF22A2C80A4BA001D6E65 /* HomeView.swift */,
 				3C1AF22C2C80A926001D6E65 /* HomeRoute.swift */,
+				3C1AF23F2C80BEFA001D6E65 /* HomeViewModel.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -239,6 +259,15 @@
 				3C1AF2392C80AE2F001D6E65 /* Text+Styles.swift */,
 			);
 			path = Texts;
+			sourceTree = "<group>";
+		};
+		3C1AF2452C80E011001D6E65 /* MovieDetail */ = {
+			isa = PBXGroup;
+			children = (
+				3C1AF2462C80E023001D6E65 /* DetailView.swift */,
+				3C1AF24A2C80F024001D6E65 /* DetailViewModel.swift */,
+			);
+			path = MovieDetail;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -325,12 +354,17 @@
 				3C1AF2232C7FB3BD001D6E65 /* TabItem.swift in Sources */,
 				3C1AF22F2C80ABAB001D6E65 /* SearchView.swift in Sources */,
 				3C1AF23E2C80B93C001D6E65 /* PlaceholderView.swift in Sources */,
+				3C1AF2402C80BEFA001D6E65 /* HomeViewModel.swift in Sources */,
 				3C1AF2132C7F9750001D6E65 /* MoviesRepository+Imp.swift in Sources */,
 				3C1AF23A2C80AE2F001D6E65 /* Text+Styles.swift in Sources */,
+				3C1AF2472C80E023001D6E65 /* DetailView.swift in Sources */,
 				3C1AF2172C7F9DCE001D6E65 /* DateParser.swift in Sources */,
+				3C1AF2492C80E834001D6E65 /* GenericHeader.swift in Sources */,
 				3C1AF2382C80ADE1001D6E65 /* TextModifier.swift in Sources */,
 				3C1AF2312C80ABB8001D6E65 /* SearchRoute.swift in Sources */,
+				3C1AF2422C80CA49001D6E65 /* RemoteImage.swift in Sources */,
 				3C1AF20E2C7F948F001D6E65 /* MoviesRepository.swift in Sources */,
+				3C1AF24B2C80F024001D6E65 /* DetailViewModel.swift in Sources */,
 				3C1AF22B2C80A4BA001D6E65 /* HomeView.swift in Sources */,
 				3C1AF21F2C7FAF6C001D6E65 /* CustomImage.swift in Sources */,
 				3C1AF2332C80ABD1001D6E65 /* WatchlistRoute.swift in Sources */,
@@ -341,6 +375,8 @@
 				3C1AF2352C80AC26001D6E65 /* WatchlistView.swift in Sources */,
 				3C1AF22D2C80A927001D6E65 /* HomeRoute.swift in Sources */,
 				3C1AF20B2C7F81DE001D6E65 /* CommonResponse.swift in Sources */,
+				3C1AF24D2C810A2C001D6E65 /* FloatUtils.swift in Sources */,
+				3C1AF2442C80CF1F001D6E65 /* BorderedNumber.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

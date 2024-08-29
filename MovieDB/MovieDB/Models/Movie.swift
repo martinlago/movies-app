@@ -7,9 +7,11 @@
 
 import Foundation
 
+typealias Movies = [Movie]
+
 // MARK: - Movie Models
 
-struct Movie: Decodable {
+struct Movie: Decodable, Equatable, Identifiable, Hashable {
     let id: Int
     let title: String
     let releaseDate: String
@@ -27,12 +29,13 @@ struct Movie: Decodable {
     }
 }
 
-struct MovieDetail: Decodable {
+struct MovieDetail: Decodable, Equatable, Hashable {
     let id: Int
     let title: String
     let overview: String
     let releaseDate: String
     let posterPath: String
+    let backdropPath: String
     let voteAverage: Float
     let genres: [Genre]
     let runtime: Int
@@ -44,6 +47,7 @@ struct MovieDetail: Decodable {
         case id, title, overview, genres, runtime, budget, revenue, tagline
         case releaseDate = "release_date"
         case posterPath = "poster_path"
+        case backdropPath = "backdrop_path"
         case voteAverage = "vote_average"
     }
 }

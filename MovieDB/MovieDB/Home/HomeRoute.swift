@@ -10,5 +10,5 @@ import Foundation
 // MARK: - Routes for Home tab
 
 enum HomeRoute: Hashable {
-    case detail
+    case detail(MovieDetail, MovieVideo?)
 }

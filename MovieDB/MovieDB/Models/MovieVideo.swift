@@ -7,8 +7,14 @@
 
 import Foundation
 
-struct MovieVideo: Decodable {
+struct MovieVideoResponse: Decodable {
     let id: Int
+    let results: [MovieVideo]
+}
+
+struct MovieVideo: Decodable, Equatable, Hashable {
+    let id: String
+    let key: String
     let site: String
     let type: String
 }
