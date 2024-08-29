@@ -33,7 +33,7 @@ extension Text {
     
     func lightStyle(
         size: CGFloat = 15,
-        color: Color = .gray.opacity(0.5),
+        color: Color = .gray,
         weight: Font.Weight = .regular
     ) -> some View {
         modifier(

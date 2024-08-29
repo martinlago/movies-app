@@ -37,6 +37,8 @@
 		3C1AF2352C80AC26001D6E65 /* WatchlistView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C1AF2342C80AC26001D6E65 /* WatchlistView.swift */; };
 		3C1AF2382C80ADE1001D6E65 /* TextModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C1AF2372C80ADE1001D6E65 /* TextModifier.swift */; };
 		3C1AF23A2C80AE2F001D6E65 /* Text+Styles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C1AF2392C80AE2F001D6E65 /* Text+Styles.swift */; };
+		3C1AF23C2C80B43D001D6E65 /* TextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C1AF23B2C80B43D001D6E65 /* TextField.swift */; };
+		3C1AF23E2C80B93C001D6E65 /* PlaceholderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C1AF23D2C80B93C001D6E65 /* PlaceholderView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -72,6 +74,8 @@
 		3C1AF2342C80AC26001D6E65 /* WatchlistView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchlistView.swift; sourceTree = "<group>"; };
 		3C1AF2372C80ADE1001D6E65 /* TextModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextModifier.swift; sourceTree = "<group>"; };
 		3C1AF2392C80AE2F001D6E65 /* Text+Styles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Text+Styles.swift"; sourceTree = "<group>"; };
+		3C1AF23B2C80B43D001D6E65 /* TextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextField.swift; sourceTree = "<group>"; };
+		3C1AF23D2C80B93C001D6E65 /* PlaceholderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceholderView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -187,6 +191,8 @@
 			isa = PBXGroup;
 			children = (
 				3C1AF21E2C7FAF6C001D6E65 /* CustomImage.swift */,
+				3C1AF23B2C80B43D001D6E65 /* TextField.swift */,
+				3C1AF23D2C80B93C001D6E65 /* PlaceholderView.swift */,
 			);
 			path = UIComponents;
 			sourceTree = "<group>";
@@ -309,6 +315,7 @@
 				3C1AF2192C7FA561001D6E65 /* MovieVideo.swift in Sources */,
 				3C1AF2092C7F6FB1001D6E65 /* ApiError.swift in Sources */,
 				3C1AF2032C7F61BB001D6E65 /* ApiConstants.swift in Sources */,
+				3C1AF23C2C80B43D001D6E65 /* TextField.swift in Sources */,
 				3C1AF1F02C7F5375001D6E65 /* MainView.swift in Sources */,
 				3C1AF2212C7FB2FA001D6E65 /* TabBarSettings.swift in Sources */,
 				3C1AF2152C7F9C6E001D6E65 /* Genres.swift in Sources */,
@@ -317,6 +324,7 @@
 				3C1AF2112C7F96C7001D6E65 /* Movie.swift in Sources */,
 				3C1AF2232C7FB3BD001D6E65 /* TabItem.swift in Sources */,
 				3C1AF22F2C80ABAB001D6E65 /* SearchView.swift in Sources */,
+				3C1AF23E2C80B93C001D6E65 /* PlaceholderView.swift in Sources */,
 				3C1AF2132C7F9750001D6E65 /* MoviesRepository+Imp.swift in Sources */,
 				3C1AF23A2C80AE2F001D6E65 /* Text+Styles.swift in Sources */,
 				3C1AF2172C7F9DCE001D6E65 /* DateParser.swift in Sources */,

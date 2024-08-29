@@ -10,11 +10,11 @@ import SwiftUI
 struct CustomImage: View {
     
     let name: String
-    let width: CGFloat?
-    let height: CGFloat?
+    let width: CGFloat
+    let height: CGFloat
     let color: Color?
     
-    init(name: String, width: CGFloat? = nil, height: CGFloat? = nil, color: Color? = nil) {
+    init(name: String, width: CGFloat = 18, height: CGFloat = 18, color: Color? = nil) {
         self.name = name
         self.width = width
         self.height = height
