@@ -9,9 +9,14 @@ import SwiftUI
 
 @main
 struct MovieDBApp: App {
+    
+    @StateObject private var tabBarSettings = TabBarSettings()
+    
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            MainView()
+                .environmentObject(tabBarSettings)
         }
     }
+    
 }
