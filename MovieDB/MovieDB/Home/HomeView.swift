@@ -52,6 +52,7 @@ struct HomeView: View {
             }
         }
         .onAppear {
+            categorySelected = .nowPlaying
             viewModel.initialization(quantity: 6)
         }
         .onReceive(viewModel.$state, perform: evaluateState)

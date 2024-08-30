@@ -53,6 +53,7 @@ private extension ApiManager {
         
         /// Headers
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        // TODO: Store securely the auth token
         request.setValue("Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJhZDk1MTY5ZGM0NzViMjM1NjExYzEzMWEzN2RjOTUyOSIsIm5iZiI6MTcyNDg1Mzg5Ny4zMzEzMDksInN1YiI6IjY2Y2U3MjhkNDkzNzNhMjZjNmQzZDYxOCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.uydC23wqL38pwgNKnBDMlej3KtZ8zIpGVHGNi0ecLAw", forHTTPHeaderField: "Authorization")
         
         return request

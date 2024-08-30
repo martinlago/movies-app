@@ -48,6 +48,9 @@ struct SearchView: View {
         .onAppear {
             viewModel.initialization()
         }
+        .onDisappear {
+            text = ""
+        }
         .onReceive(viewModel.$state, perform: evaluateState)
     }
 }

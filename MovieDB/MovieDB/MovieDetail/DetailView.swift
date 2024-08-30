@@ -163,7 +163,7 @@ extension DetailView {
         Text(detail.overview)
             .bodyStyle()
             .multilineTextAlignment(.leading)
-            .fixedSize(horizontal: false, vertical: /*@START_MENU_TOKEN@*/true/*@END_MENU_TOKEN@*/)
+            .fixedSize(horizontal: false, vertical: true)
     }
     
     @ViewBuilder
@@ -178,12 +178,6 @@ extension DetailView {
                 .padding(.top, 70)
         }
     }
-    
-}
-
-// MARK: - Helpers
-
-private extension DetailView {
     
 }
 

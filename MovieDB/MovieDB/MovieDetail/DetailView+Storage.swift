@@ -44,10 +44,11 @@ extension DetailView {
         }
         
         modelContext.insert(movie)
-        isMovieAdded.toggle()
         
-        tabBar.selectedTab = .saved
-        router.popToRoot()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            tabBar.selectedTab = .saved
+            router.popToRoot()
+        }
     }
     
     func deleteMovie() {
