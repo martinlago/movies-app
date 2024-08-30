@@ -120,6 +120,7 @@ private extension SearchView {
             break
         case .loadingGenres:
             isLoading = true
+            showError = false
             
         case .didLoadGenres(let genres):
             isLoading = false

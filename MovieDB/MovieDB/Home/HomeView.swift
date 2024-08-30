@@ -164,6 +164,7 @@ private extension HomeView {
                 break
             case .loadingAllMovies:
                 isLoading = true
+                showError = false
                 
             case .didLoadAllMovies(let popular, let nowPlaying):
                 isLoading = false

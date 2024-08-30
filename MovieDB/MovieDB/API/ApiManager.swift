@@ -49,6 +49,7 @@ private extension ApiManager {
         
         /// Method
         request.httpMethod = endpoint.method
+        request.cachePolicy = .returnCacheDataElseLoad
         
         /// Headers
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
