@@ -8,33 +8,6 @@
 import SwiftUI
 import SwiftData
 
-import SwiftUI
-import WebKit
-
-struct WebView: UIViewRepresentable {
-    let url: URL
-
-    func makeUIView(context: Context) -> WKWebView {
-        return WKWebView()
-    }
-
-    func updateUIView(_ uiView: WKWebView, context: Context) {
-        let request = URLRequest(url: url)
-        uiView.load(request)
-    }
-}
-
-extension UINavigationController: UIGestureRecognizerDelegate {
-    override open func viewDidLoad() {
-        super.viewDidLoad()
-        interactivePopGestureRecognizer?.delegate = self
-    }
-
-    public func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
-        return viewControllers.count > 1
-    }
-}
-
 // MARK: - Movie detail view
 
 struct DetailView<Route: Hashable>: View {
@@ -42,7 +15,6 @@ struct DetailView<Route: Hashable>: View {
     @Environment(\.modelContext) var modelContext
     @EnvironmentObject var tabBar: TabBarSettings
     
-    @StateObject private var viewModel = DetailViewModel()
     @ObservedObject var router: Router<Route>
     
     @State var sheetPresented = false
@@ -50,73 +22,74 @@ struct DetailView<Route: Hashable>: View {
     /// View parameters
     let detail: MovieDetail
     let video: MovieVideo?
+    let posterData: Data?
+    let backdropData: Data?
     
     @State var isMovieAdded = false
     @Query(sort: [SortDescriptor(\DBMovie.dateAdded, order: .reverse)]) var movies: [DBMovie]
     
-    init(router: Router<Route>, detail: MovieDetail, video: MovieVideo?) {
+    init(router: Router<Route>, detail: MovieDetail, video: MovieVideo?, posterData: Data? = nil, backdropData: Data? = nil) {
         self.router = router
         self.detail = detail
         self.video = video
+        self.posterData = posterData
+        self.backdropData = backdropData
     }
     
     var body: some View {
         VStack {
             GenericHeader(label: "Detail") {
-                tabBar.toggleTabBar(show: true)
                 router.pop()
             }
             
-            ScrollView(showsIndicators: false) {
-                ZStack {
-                    if let backgropImageURL = URL(string: "\(ApiConstants.baseImagesURL)\(detail.backdropPath)") {
-                        GeometryReader { geometry in
-                            RemoteImage(url: backgropImageURL, width: geometry.size.width, height: 220)
-                                .onTapGesture {
-                                    sheetPresented = true
-                                }
+            GeometryReader { geometry in
+                ScrollView(showsIndicators: false) {
+                    VStack(spacing: 0) {
+                        ZStack(alignment: .top) {
+                                GenericImage(
+                                    data: backdropData,
+                                    url: detail.backdropPath,
+                                    width: geometry.size.width,
+                                    height: 220,
+                                    clipImage: false
+                                )
+                            
+                            videoButton
+                            VStack(spacing: 24) {
+                                mainSection
+                                additionalInformation
+                                    .padding(.bottom, 12)
+                                overview
+                            }
+                            .padding(.top, 140)
+                            .padding(.horizontal, 20)
                         }
+                        
+                        Spacer()
+                            .frame(minHeight: 24)
+                        
+                        CustomButton(label: isMovieAdded ? "Remove from Watchlist" : "Add to Watchlist") {
+                            if isMovieAdded {
+                                deleteMovie()
+                            } else {
+                                saveMovie()
+                            }
+                        }
+                        .padding(.horizontal, 32)
                     }
-                    
-                    VStack(spacing: 24) {
-                        mainSection
-                        additionalInformation
-                            .padding(.bottom, 12)
-                        overview
-                    }
-                    .padding(.top, 75)
-                    .padding(.horizontal, 32)
+                    .frame(minHeight: geometry.size.height)
                 }
-                
-                Spacer()
-                
-                CustomButton(label: isMovieAdded ? "Remove from Watchlist" : "Add to Watchlist") {
-                    if isMovieAdded {
-                        deleteMovie()
-                    } else {
-                        saveMovie()
-                    }
-                }
-                .padding(.horizontal, 32)
             }
         }
-        .frame(maxHeight: .infinity, alignment: .top)
         .background(Color.background.ignoresSafeArea())
         .navigationBarBackButtonHidden()
-        .sheet(isPresented: $sheetPresented, content: {
-            VStack {
-                Text("Official Trailer")
-                    .titleStyle()
-//                WebView(url: URL(string: "https://player.vimeo.com/video/121450839")!)
-                WebView(url: URL(string: "https://www.youtube.com/embed/\(video?.key ?? "")")!)
-                    .frame(height: 220)
-            }
-                .background(Color.background.ignoresSafeArea())
-                .presentationDetents([.fraction(0.5)])
-        })
         .onAppear {
-            print(modelContext.sqliteCommand)
             isMovieAdded = movies.first { $0.id == detail.id } != nil
+        }
+        .sheet(isPresented: $sheetPresented) {
+            if let videoId = video?.key, let site = video?.site {
+                VideoPlayer(videoId: videoId, fromYoutube: site == "YouTube")
+            }
         }
     }
     
@@ -128,18 +101,15 @@ extension DetailView {
     
     var mainSection: some View {
         HStack(alignment: .center, spacing: 16) {
-            if let imageURL = URL(string: "\(ApiConstants.baseImagesURL)\(detail.posterPath)") {
-                RemoteImage(url: imageURL, width: 80, height: 155)
-                    .clipShape(RoundedRectangle(cornerRadius: 16))
-            }
+            GenericImage(data: posterData, url: detail.posterPath, width: 110, height: 155)
             
-            VStack(spacing: 0) {
+            VStack(spacing: 16) {
                 ratingChip
                 Text(detail.title)
                     .titleStyle(size: 24)
                     .lineLimit(2)
                     .multilineTextAlignment(.leading)
-                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
             }
         }
         .frame(height: 155)
@@ -161,7 +131,7 @@ extension DetailView {
             Capsule()
                 .fill(Color.background)
         )
-        .frame(maxWidth: .infinity, alignment: .trailing)
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottomTrailing)
     }
     
     var additionalInformation: some View {
@@ -169,7 +139,7 @@ extension DetailView {
             informationItem(icon: "CalendarIcon", label: detail.releaseDate.yearFromDate ?? "-")
             Text("|")
                 .lightStyle(size: 20)
-            informationItem(icon: "ClockIcon", label: "\(detail.runtime) Minutes")
+            informationItem(icon: "ClockIcon", label: "\(detail.runtime) minutes")
             Text("|")
                 .lightStyle(size: 20)
             informationItem(icon: "TicketIcon", label: detail.genres.first?.name ?? "-")
@@ -193,6 +163,20 @@ extension DetailView {
         Text(detail.overview)
             .bodyStyle()
             .multilineTextAlignment(.leading)
+            .fixedSize(horizontal: false, vertical: /*@START_MENU_TOKEN@*/true/*@END_MENU_TOKEN@*/)
+    }
+    
+    @ViewBuilder
+    var videoButton: some View {
+        if let _ = video {
+            Image(systemName: "play.circle")
+                .font(.system(size: 80))
+                .zIndex(500)
+                .onTapGesture {
+                    sheetPresented = true
+                }
+                .padding(.top, 70)
+        }
     }
     
 }
@@ -200,21 +184,6 @@ extension DetailView {
 // MARK: - Helpers
 
 private extension DetailView {
-    
-    func evaluateState(_ state: DetailState) {
-//        switch state {
-//        case .idle:
-//            break
-//        case .loadingDetail:
-//            break
-//        case .didLoadMovieDetail(let movieDetail, let movieVideo):
-//            detail = movieDetail
-//            video = movieVideo
-//            
-//        case .error:
-//            break
-//        }
-    }
     
 }
 

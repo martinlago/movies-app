@@ -1,70 +1,75 @@
 //
-//  HomeViewModel.swift
+//  SearchViewModel.swift
 //  MovieDB
 //
 //  Created by Martin Lago on 29/8/24.
 //
 
 import SwiftUI
+import Combine
 
-enum HomeState: Equatable {
+enum SearchState: Equatable {
     case idle
-    case loadingAllMovies
-    case didLoadAllMovies(Movies, Movies)
-    case loadingMovies
-    case didLoadMovies(Movies)
+    case loadingGenres
+    case didLoadGenres(Genres)
+    case loadingSearch
+    case didLoadSearch(Movies)
     case loadingDetail
     case didLoadMovieDetail(MovieDetail, MovieVideo?)
     case error
 }
 
-enum MoviesType: Equatable {
-    case nowPlaying
-    case upcoming
-    case topRated
-}
-
 @MainActor
-class HomeViewModel: ObservableObject {
+class SearchViewModel: ObservableObject {
     
-    @Published private(set) var state: HomeState = .idle
+    @Published private(set) var state: SearchState = .idle
     
     private var repository: MoviesRepository
     
+    private var cancellables: Set<AnyCancellable> = []
+    let debouncedTextPublisher = PassthroughSubject<String, Never>()
+        
     init(repository: MoviesRepository = MoviesRepositoryImp()) {
         self.repository = repository
+        
+        setupDebouncedText()
     }
     
 }
 
 // MARK: - Management
 
-extension HomeViewModel {
+extension SearchViewModel {
     
-    func initialization(quantity: Int) {
-        state = .loadingAllMovies
+    func initialization() {
+        state = .loadingGenres
         
         Task {
             do {
-                async let popularMoviesResponse = getPopularMovies()
-                async let nowPlayingMoviesResponse = getMovies(of: .nowPlaying, and: quantity)
-                let data = try await (popularMoviesResponse, nowPlayingMoviesResponse)
-                
-                state = .didLoadAllMovies(data.0, data.1)
+                let genres = try await getGenres()
+                state = .didLoadGenres(genres)
             } catch {
                 state = .error
             }
         }
     }
     
-    func switchCategory(to type: MoviesType) {
-        state = .loadingMovies
+    func setupDebouncedText() {
+        debouncedTextPublisher
+            .debounce(for: .seconds(0.8), scheduler: DispatchQueue.main)
+            .sink { [weak self] text in
+                self?.searchMovies(query: text)
+            }
+            .store(in: &cancellables)
+    }
+    
+    func searchMovies(query: String) {
+        state = .loadingSearch
         
         Task {
             do {
-                let movies = try await getMovies(of: type, and: 6)
-                
-                state = .didLoadMovies(movies)
+                let movies = try await searchMovies(query: query)
+                state = .didLoadSearch(movies)
             } catch {
                 state = .error
             }
@@ -94,21 +99,14 @@ extension HomeViewModel {
 
 // MARK: - API Calls
 
-private extension HomeViewModel {
+private extension SearchViewModel {
     
-    func getPopularMovies() async throws -> Movies {
-        return try await repository.getPopularMovies()
+    func getGenres() async throws -> Genres {
+        return try await repository.getMoviesGenres()
     }
     
-    func getMovies(of type: MoviesType, and quantity: Int) async throws -> Movies {
-        switch type {
-        case .nowPlaying:
-            return try await repository.getNowPlayingMovies(quantity: quantity)
-        case .upcoming:
-            return try await repository.getUpcomingMovies(quantity: quantity)
-        case .topRated:
-            return try await repository.getTopRatedMovies(quantity: quantity)
-        }
+    func searchMovies(query: String) async throws -> Movies {
+        return try await repository.searchMovies(by: query)
     }
     
     func getMovieDetail(for id: Int) async throws -> MovieDetail {

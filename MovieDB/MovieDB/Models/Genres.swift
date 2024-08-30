@@ -7,7 +7,11 @@
 
 import Foundation
 
-struct Genres: Decodable {
+typealias Genres = [Genre]
+
+// MARK: - Genres models
+
+struct GenresResponse: Decodable {
     let genres: [Genre]
 }
 

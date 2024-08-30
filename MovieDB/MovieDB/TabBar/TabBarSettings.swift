@@ -13,20 +13,7 @@ import SwiftUI
 class TabBarSettings: ObservableObject {
     
     @Published var selectedTab: TabItem = .home
-    @Published private(set) var isTabBarShown = true
     
     public init() {}
-    
-}
-
-// MARK: - Methods
-
-extension TabBarSettings {
-    
-    func toggleTabBar(show: Bool) {
-        withAnimation {
-            isTabBarShown = show
-        }
-    }
     
 }

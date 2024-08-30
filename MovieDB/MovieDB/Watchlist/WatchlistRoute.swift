@@ -10,5 +10,5 @@ import Foundation
 // MARK: - Routes for Watchlist tab
 
 enum WatchlistRoute: Hashable {
-    case detail
+    case detail(MovieDetail, Data?, Data?)
 }

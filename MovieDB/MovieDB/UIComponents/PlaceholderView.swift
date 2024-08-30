@@ -24,7 +24,7 @@ struct PlaceholderView: View {
             }
             .multilineTextAlignment(.center)
         }
-        .frame(maxWidth: 250)
+        .frame(maxWidth: 250, maxHeight: .infinity)
     }
 }
 

@@ -15,8 +15,9 @@ struct CustomTextField: View {
     
     var body: some View {
         HStack(spacing: 12) {
-            TextField("ola", text: $text)
+            TextField("Search", text: $text)
                 .font(.system(size: 16, design: .rounded))
+                .autocorrectionDisabled()
                 .foregroundStyle(.white)
             CustomImage(name: "SearchIcon", width: 22, height: 22, color: .gray)
                 .rotation3DEffect(

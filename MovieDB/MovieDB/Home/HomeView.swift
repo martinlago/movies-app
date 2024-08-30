@@ -17,21 +17,32 @@ struct HomeView: View {
     @State private var popularMovies: Movies = []
     @State private var movies: Movies = []
     @State private var categorySelected: MoviesType = .nowPlaying
+    @State private var isLoading = false
+    @State private var showError = false
     
     var body: some View {
         NavigationStack(path: $router.path) {
-            ScrollView(showsIndicators: false) {
-                VStack {
-                    Text("What do you want to watch?")
-                        .titleStyle()
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                        .padding(.bottom, 32)
-                    
-                    popularMoviesCarousel
-                    moviesCategoriesSection
+            GeometryReader { geometry in
+                ScrollView(showsIndicators: false) {
+                    VStack {
+                        Text("What do you want to watch?")
+                            .titleStyle()
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .padding([.top, .horizontal], 24)
+                        
+                        if showError {
+                            ErrorView()
+                        } else if isLoading {
+                            loadingView
+                            
+                        } else {
+                            popularMoviesCarousel
+                            moviesCategoriesSection
+                        }
+                    }
+                    .frame(minHeight: geometry.size.height)
                 }
             }
-            .padding(.horizontal, 24)
             .background(Color.background.ignoresSafeArea())
             .navigationDestination(for: HomeRoute.self) { route in
                 switch route {
@@ -51,24 +62,31 @@ struct HomeView: View {
 
 private extension HomeView {
     
+    @ViewBuilder
+    var loadingView: some View {
+        Spacer()
+        ProgressView()
+        Spacer()
+    }
+    
     var popularMoviesCarousel: some View {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack(spacing: 40) {
                 ForEach(Array(popularMovies.enumerated()), id: \.0) { (index, movie) in
-                    if let imageURL = URL(string: "\(ApiConstants.baseImagesURL)\(movie.posterPath)") {
-                        ZStack(alignment: .bottomLeading) {
-                            RemoteImage(url: imageURL, width: 180, height: 250)
-                                .clipShape(RoundedRectangle(cornerRadius: 16))
-                            BorderedNumber(number: index + 1)
-                        }
-                        .onTapGesture {
-                            viewModel.getMovieDetail(for: movie.id)
-                        }
+                    ZStack(alignment: .topLeading) {
+                        GenericImage(url: movie.posterPath, width: 180, height: 250)
+                        BorderedNumber(number: index + 1)
+                            .offset(y: 180)
+                    }
+                    .frame(height: 325)
+                    .padding(.trailing, index == popularMovies.count - 1 ? 24 : 0)
+                    .onTapGesture {
+                        viewModel.getMovieDetail(for: movie.id)
                     }
                 }
             }
         }
-        .padding(.bottom, 60)
+        .padding(.leading, 24)
     }
     
     var moviesCategoriesSection: some View {
@@ -81,6 +99,8 @@ private extension HomeView {
             
             moviesGrid
         }
+        .padding(.top, 40)
+        .padding(.horizontal, 24)
     }
     
     func categorySelector(_ label: String, category: MoviesType) -> some View {
@@ -111,65 +131,65 @@ private extension HomeView {
             Grid(horizontalSpacing: 16, verticalSpacing: 24) {
                 GridRow {
                     ForEach(firstRow, id: \.self) { movie in
-                        if let imageURL = URL(string: "\(ApiConstants.baseImagesURL)\(movie.posterPath)") {
-                                RemoteImage(url: imageURL, width: (geometry.size.width - 32) / 3, height: 155)
-                                    .clipShape(RoundedRectangle(cornerRadius: 16))
-                                    .onTapGesture {
-                                        viewModel.getMovieDetail(for: movie.id)
-                                    }
-                        }
+                        GenericImage(url: movie.posterPath, width: (geometry.size.width - 32) / 3, height: 155)
+                            .onTapGesture {
+                                viewModel.getMovieDetail(for: movie.id)
+                            }
                     }
+                    
                 }
                 GridRow {
                     ForEach(secondRow, id: \.self) { movie in
-                        if let imageURL = URL(string: "\(ApiConstants.baseImagesURL)\(movie.posterPath)") {
-                                RemoteImage(url: imageURL, width: (geometry.size.width - 32) / 3, height: 155)
-                                    .clipShape(RoundedRectangle(cornerRadius: 16))
-                                    .onTapGesture {
-                                        viewModel.getMovieDetail(for: movie.id)
-                                    }
-                        }
+                        GenericImage(url: movie.posterPath, width: (geometry.size.width - 32) / 3, height: 155)
+                            .onTapGesture {
+                                viewModel.getMovieDetail(for: movie.id)
+                            }
                     }
+                    
                 }
             }
         }
-        .frame(minHeight: 360)
+            .frame(height: 360)
+        }
+        
     }
     
-}
-
-// MARK: - Logic helpers
-
-private extension HomeView {
+    // MARK: - Logic helpers
     
-    func evaluateState(_ state: HomeState) {
-        switch state {
-        case .idle:
-            break
-        case .loadingAllMovies:
-            break
-        case .didLoadAllMovies(let popular, let nowPlaying):
-            popularMovies = popular
-            movies = nowPlaying
-            
-        case .loadingMovies:
-            break
-        case .didLoadMovies(let movies):
-            self.movies = movies
-            
-        case .loadingDetail:
-            break
-            
-        case .didLoadMovieDetail(let detail, let video):
-            router.push(.detail(detail, video))
-            
-        case .error:
-            break
+    private extension HomeView {
+        
+        func evaluateState(_ state: HomeState) {
+            switch state {
+            case .idle:
+                break
+            case .loadingAllMovies:
+                isLoading = true
+                
+            case .didLoadAllMovies(let popular, let nowPlaying):
+                isLoading = false
+                popularMovies = popular
+                movies = nowPlaying
+                
+            case .loadingMovies:
+                break
+                
+            case .didLoadMovies(let movies):
+                self.movies = movies
+                
+            case .loadingDetail:
+                break
+                
+            case .didLoadMovieDetail(let detail, let video):
+                router.push(.detail(detail, video))
+                
+            case .error:
+                showError = true
+                isLoading = false
+            }
         }
     }
-}
-
-#Preview {
-    HomeView()
-        .environmentObject(Router<HomeRoute>())
-}
+    
+    #Preview {
+        HomeView()
+            .environmentObject(Router<HomeRoute>())
+    }

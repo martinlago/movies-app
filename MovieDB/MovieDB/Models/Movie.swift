@@ -15,7 +15,7 @@ struct Movie: Decodable, Equatable, Identifiable, Hashable {
     let id: Int
     let title: String
     let releaseDate: String
-    let posterPath: String
+    let posterPath: String?
     let voteAverage: Float
     let genres: [Int]
     
@@ -34,8 +34,8 @@ struct MovieDetail: Decodable, Equatable, Hashable {
     let title: String
     let overview: String
     let releaseDate: String
-    let posterPath: String
-    let backdropPath: String
+    let posterPath: String?
+    let backdropPath: String?
     let voteAverage: Float
     let genres: [Genre]
     let runtime: Int

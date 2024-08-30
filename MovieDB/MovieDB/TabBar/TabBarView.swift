@@ -14,26 +14,24 @@ struct TabBarView: View {
     @EnvironmentObject var tabBar: TabBarSettings
     
     var body: some View {
-        if tabBar.isTabBarShown {
-            VStack(spacing: 16) {
-                Rectangle()
-                    .foregroundStyle(Color.mainBlue)
-                    .frame(height: 1)
-                
-                HStack(alignment: .center) {
-                    ForEach(TabItem.allCases, id: \.self) { item in
-                        tabItem(item: item)
-                            .frame(maxWidth: .infinity, alignment: .center)
-                            .onTapGesture {
-                                withAnimation {
-                                    tabBar.selectedTab = item
-                                }
+        VStack(spacing: 16) {
+            Rectangle()
+                .foregroundStyle(Color.mainBlue)
+                .frame(height: 1)
+            
+            HStack(alignment: .center) {
+                ForEach(TabItem.allCases, id: \.self) { item in
+                    tabItem(item: item)
+                        .frame(maxWidth: .infinity, alignment: .center)
+                        .onTapGesture {
+                            withAnimation {
+                                tabBar.selectedTab = item
                             }
-                    }
+                        }
                 }
             }
-            .background(Color.background.ignoresSafeArea())
         }
+        .background(Color.background.ignoresSafeArea())
     }
 }
 

@@ -45,7 +45,6 @@ private extension ApiManager {
         }
         
         components.queryItems = components.queryItems.map { $0 + queryItems } ?? queryItems
-        // TODO: Remove this forced unwrap
         var request = URLRequest(url: components.url!)
         
         /// Method

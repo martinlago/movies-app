@@ -12,7 +12,8 @@ import Foundation
 class MoviesRepositoryImp: MoviesRepository {
     
     func getMoviesGenres() async throws -> Genres {
-        return try await ApiManager.shared.performRequest(for: .genres)
+        let response: GenresResponse = try await ApiManager.shared.performRequest(for: .genres)
+        return response.genres
     }
     
     func getPopularMovies() async throws -> Movies {

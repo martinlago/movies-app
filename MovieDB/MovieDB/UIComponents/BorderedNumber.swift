@@ -14,9 +14,9 @@ struct BorderedNumber: View {
     var body: some View {
         ZStack {
             Text(String(number))
-                .bodyStyle(size: 150, color: .mainBlue, weight: .medium)
+                .bodyStyle(size: 100, color: .mainBlue, weight: .medium)
             Text(String(number))
-                .bodyStyle(size: 150, color: .background)
+                .bodyStyle(size: 100, color: .background)
                 .scaleEffect(0.99)
         }
     }

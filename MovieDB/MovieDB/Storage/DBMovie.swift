@@ -18,9 +18,9 @@ class DBMovie {
     var runtime: Int
     var genre: String
     var overview: String
-    var posterImage: Data?
-    var backdropImage: Data?
-
+    @Attribute(.externalStorage) var posterImage: Data?
+    @Attribute(.externalStorage) var backdropImage: Data?
+    
     init(
         id: Int,
         title: String,
