@@ -46,6 +46,9 @@
 		3C1AF2492C80E834001D6E65 /* GenericHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C1AF2482C80E834001D6E65 /* GenericHeader.swift */; };
 		3C1AF24B2C80F024001D6E65 /* DetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C1AF24A2C80F024001D6E65 /* DetailViewModel.swift */; };
 		3C1AF24D2C810A2C001D6E65 /* FloatUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C1AF24C2C810A2C001D6E65 /* FloatUtils.swift */; };
+		3C1AF2502C812F2D001D6E65 /* DBMovie.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C1AF24F2C812F2D001D6E65 /* DBMovie.swift */; };
+		3C1AF2522C8136BF001D6E65 /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C1AF2512C8136BF001D6E65 /* CustomButton.swift */; };
+		3C1AF2542C813D62001D6E65 /* DetailView+Storage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C1AF2532C813D62001D6E65 /* DetailView+Storage.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -90,6 +93,9 @@
 		3C1AF2482C80E834001D6E65 /* GenericHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericHeader.swift; sourceTree = "<group>"; };
 		3C1AF24A2C80F024001D6E65 /* DetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewModel.swift; sourceTree = "<group>"; };
 		3C1AF24C2C810A2C001D6E65 /* FloatUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatUtils.swift; sourceTree = "<group>"; };
+		3C1AF24F2C812F2D001D6E65 /* DBMovie.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DBMovie.swift; sourceTree = "<group>"; };
+		3C1AF2512C8136BF001D6E65 /* CustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
+		3C1AF2532C813D62001D6E65 /* DetailView+Storage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DetailView+Storage.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -122,6 +128,7 @@
 		3C1AF1EC2C7F5375001D6E65 /* MovieDB */ = {
 			isa = PBXGroup;
 			children = (
+				3C1AF24E2C812F08001D6E65 /* Storage */,
 				3C1AF2452C80E011001D6E65 /* MovieDetail */,
 				3C1AF2272C7FD270001D6E65 /* Routing */,
 				3C1AF2262C7FCFDE001D6E65 /* Watchlist */,
@@ -212,6 +219,7 @@
 				3C1AF2412C80CA49001D6E65 /* RemoteImage.swift */,
 				3C1AF2432C80CF1F001D6E65 /* BorderedNumber.swift */,
 				3C1AF2482C80E834001D6E65 /* GenericHeader.swift */,
+				3C1AF2512C8136BF001D6E65 /* CustomButton.swift */,
 			);
 			path = UIComponents;
 			sourceTree = "<group>";
@@ -266,8 +274,17 @@
 			children = (
 				3C1AF2462C80E023001D6E65 /* DetailView.swift */,
 				3C1AF24A2C80F024001D6E65 /* DetailViewModel.swift */,
+				3C1AF2532C813D62001D6E65 /* DetailView+Storage.swift */,
 			);
 			path = MovieDetail;
+			sourceTree = "<group>";
+		};
+		3C1AF24E2C812F08001D6E65 /* Storage */ = {
+			isa = PBXGroup;
+			children = (
+				3C1AF24F2C812F2D001D6E65 /* DBMovie.swift */,
+			);
+			path = Storage;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -344,6 +361,7 @@
 				3C1AF2192C7FA561001D6E65 /* MovieVideo.swift in Sources */,
 				3C1AF2092C7F6FB1001D6E65 /* ApiError.swift in Sources */,
 				3C1AF2032C7F61BB001D6E65 /* ApiConstants.swift in Sources */,
+				3C1AF2502C812F2D001D6E65 /* DBMovie.swift in Sources */,
 				3C1AF23C2C80B43D001D6E65 /* TextField.swift in Sources */,
 				3C1AF1F02C7F5375001D6E65 /* MainView.swift in Sources */,
 				3C1AF2212C7FB2FA001D6E65 /* TabBarSettings.swift in Sources */,
@@ -360,6 +378,7 @@
 				3C1AF2472C80E023001D6E65 /* DetailView.swift in Sources */,
 				3C1AF2172C7F9DCE001D6E65 /* DateParser.swift in Sources */,
 				3C1AF2492C80E834001D6E65 /* GenericHeader.swift in Sources */,
+				3C1AF2522C8136BF001D6E65 /* CustomButton.swift in Sources */,
 				3C1AF2382C80ADE1001D6E65 /* TextModifier.swift in Sources */,
 				3C1AF2312C80ABB8001D6E65 /* SearchRoute.swift in Sources */,
 				3C1AF2422C80CA49001D6E65 /* RemoteImage.swift in Sources */,
@@ -372,6 +391,7 @@
 				3C1AF1EE2C7F5375001D6E65 /* MovieDBApp.swift in Sources */,
 				3C1AF2072C7F6350001D6E65 /* ApiEndpoint.swift in Sources */,
 				3C1AF21C2C7FADE9001D6E65 /* TabBarView.swift in Sources */,
+				3C1AF2542C813D62001D6E65 /* DetailView+Storage.swift in Sources */,
 				3C1AF2352C80AC26001D6E65 /* WatchlistView.swift in Sources */,
 				3C1AF22D2C80A927001D6E65 /* HomeRoute.swift in Sources */,
 				3C1AF20B2C7F81DE001D6E65 /* CommonResponse.swift in Sources */,

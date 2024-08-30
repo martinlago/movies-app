@@ -39,12 +39,9 @@ struct MovieDetail: Decodable, Equatable, Hashable {
     let voteAverage: Float
     let genres: [Genre]
     let runtime: Int
-    let budget: Int
-    let revenue: Int
-    let tagline: String
     
     enum CodingKeys: String, CodingKey {
-        case id, title, overview, genres, runtime, budget, revenue, tagline
+        case id, title, overview, genres, runtime
         case releaseDate = "release_date"
         case posterPath = "poster_path"
         case backdropPath = "backdrop_path"

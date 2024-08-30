@@ -6,10 +6,18 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct WatchlistView: View {
+    
+    @Query(sort: [SortDescriptor(\DBMovie.dateAdded, order: .reverse)]) var movies: [DBMovie]
+
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        VStack {
+            ForEach(movies) { movie in
+                Text(movie.title)
+            }
+        }
     }
 }
 

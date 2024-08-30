@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SwiftData
 
 import SwiftUI
 import WebKit
@@ -38,7 +39,9 @@ extension UINavigationController: UIGestureRecognizerDelegate {
 
 struct DetailView<Route: Hashable>: View {
     
+    @Environment(\.modelContext) var modelContext
     @EnvironmentObject var tabBar: TabBarSettings
+    
     @StateObject private var viewModel = DetailViewModel()
     @ObservedObject var router: Router<Route>
     
@@ -48,6 +51,15 @@ struct DetailView<Route: Hashable>: View {
     let detail: MovieDetail
     let video: MovieVideo?
     
+    @State var isMovieAdded = false
+    @Query(sort: [SortDescriptor(\DBMovie.dateAdded, order: .reverse)]) var movies: [DBMovie]
+    
+    init(router: Router<Route>, detail: MovieDetail, video: MovieVideo?) {
+        self.router = router
+        self.detail = detail
+        self.video = video
+    }
+    
     var body: some View {
         VStack {
             GenericHeader(label: "Detail") {
@@ -55,26 +67,38 @@ struct DetailView<Route: Hashable>: View {
                 router.pop()
             }
             
-            ZStack {
-                if let backgropImageURL = URL(string: "\(ApiConstants.baseImagesURL)\(detail.backdropPath)") {
-                    GeometryReader { geometry in
-                        RemoteImage(url: backgropImageURL, width: geometry.size.width, height: 220)
-                            .onTapGesture {
-                                sheetPresented = true
-                            }
+            ScrollView(showsIndicators: false) {
+                ZStack {
+                    if let backgropImageURL = URL(string: "\(ApiConstants.baseImagesURL)\(detail.backdropPath)") {
+                        GeometryReader { geometry in
+                            RemoteImage(url: backgropImageURL, width: geometry.size.width, height: 220)
+                                .onTapGesture {
+                                    sheetPresented = true
+                                }
+                        }
                     }
+                    
+                    VStack(spacing: 24) {
+                        mainSection
+                        additionalInformation
+                            .padding(.bottom, 12)
+                        overview
+                    }
+                    .padding(.top, 75)
+                    .padding(.horizontal, 32)
                 }
                 
-                VStack(spacing: 24) {
-                    mainSection
-                    additionalInformation
-                        .padding(.bottom, 12)
-                    overview
+                Spacer()
+                
+                CustomButton(label: isMovieAdded ? "Remove from Watchlist" : "Add to Watchlist") {
+                    if isMovieAdded {
+                        deleteMovie()
+                    } else {
+                        saveMovie()
+                    }
                 }
-                .padding(.top, 75)
                 .padding(.horizontal, 32)
             }
-            
         }
         .frame(maxHeight: .infinity, alignment: .top)
         .background(Color.background.ignoresSafeArea())
@@ -90,6 +114,10 @@ struct DetailView<Route: Hashable>: View {
                 .background(Color.background.ignoresSafeArea())
                 .presentationDetents([.fraction(0.5)])
         })
+        .onAppear {
+            print(modelContext.sqliteCommand)
+            isMovieAdded = movies.first { $0.id == detail.id } != nil
+        }
     }
     
 }
@@ -199,15 +227,12 @@ private extension DetailView {
             overview: "The adventures of a group of explorers who make use of a newly discovered wormhole to surpass the limitations on human space travel and conquer the vast distances involved in an interstellar voyage.",
             releaseDate: "2014-11-05",
             posterPath: "/xJHokMbljvjADYdit5fK5VQsXEG.jpg",
-            backdropPath: "",
+            backdropPath: "/xJHokMbljvjADYdit5fK5VQsXEG.jpg",
             voteAverage: 9.5698,
             genres: [
                 Genre(id: 1, name: "Action")
             ],
-            runtime: 150,
-            budget: 200,
-            revenue: 200,
-            tagline: ""
+            runtime: 150
         ),
         video: nil
     )

@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SwiftData
 
 @main
 struct MovieDBApp: App {
@@ -16,7 +17,7 @@ struct MovieDBApp: App {
         WindowGroup {
             MainView()
                 .environmentObject(tabBarSettings)
+                .modelContainer(for: DBMovie.self)
         }
     }
-    
 }

@@ -22,16 +22,12 @@ class ApiManager {
     ) async throws -> D {
         let request = try createRequest(to: url, for: endpoint, with: params)
         
-        do {
-            let (responseData, _) = try await URLSession.shared.data(for: request)
-            
-            if let response = try? JSONDecoder().decode(D.self, from: responseData) {
-                return response
-            } else {
-                throw ApiError.invalidResponse
-            }
-        } catch {
-            throw ApiError.errorOnRequest
+        let (responseData, _) = try await URLSession.shared.data(for: request)
+        
+        if let response = try? JSONDecoder().decode(D.self, from: responseData) {
+            return response
+        } else {
+            throw ApiError.invalidResponse
         }
     }
 
