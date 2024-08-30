@@ -9,7 +9,7 @@ import Foundation
 
 // MARK: - Movies Repository | Implementation
 
-class MoviesRepositoryImp: MoviesRepository {
+final class MoviesRepositoryImp: MoviesRepository {
     
     func getMoviesGenres() async throws -> Genres {
         let response: GenresResponse = try await ApiManager.shared.performRequest(for: .genres)
